@@ -7,8 +7,6 @@
 !.yarn/releases
 !.yarn/versions
 
-/prisma/migrations
-
 /coverage
 
 /.next/
