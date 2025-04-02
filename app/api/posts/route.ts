@@ -13,7 +13,7 @@ export async function GET(): ApiResponse<Post[]> {
       data: posts,
       status: 200,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ message: postsErrors[500], status: 500 });
   }
 }
