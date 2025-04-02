@@ -15,11 +15,13 @@ const PostItem: FC<Props> = ({ post }) => {
       <p className="text-body-m text-grey-500">{post.body}</p>
       <div className="flex flex-row items-center gap-xl">
         <span className="text-body-s-regular text-grey-600">#{post.id}</span>
-        <div className="flex flex-row items-center gap-lg">
-          {post.tags.map((tag) => (
-            <TagItem key={tag.id} tag={tag} />
-          ))}
-        </div>
+        {post.tags.length > 0 && (
+          <div className="flex flex-row items-center gap-lg">
+            {post.tags.map((tag) => (
+              <TagItem key={tag.id} tag={tag} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

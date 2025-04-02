@@ -1,19 +1,17 @@
+import type { Tag } from "@prisma/client";
 import type { FC } from "react";
 
-import { PostItem } from "@/entities/Post";
-import type { Post } from "@/shared/api/posts";
 import { PostLayout } from "@/shared/layouts/PostLayout";
+import { PostsWidget } from "@/widgets/Posts";
 
 type Props = {
-  posts: Post[] | undefined;
+  tags: Tag[] | undefined;
 };
 
-const PostsPage: FC<Props> = ({ posts }) => {
+const PostsPage: FC<Props> = ({ tags }) => {
   return (
-    <PostLayout title="Posts">
-      <div className="flex flex-col gap-xl">
-        {posts?.map((post) => <PostItem key={post.id} post={post} />)}
-      </div>
+    <PostLayout title="Posts" tags={tags}>
+      <PostsWidget />
     </PostLayout>
   );
 };

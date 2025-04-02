@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { roboto } from "@/app/fonts";
 import { cn } from "@/shared/utils";
 
+import RootProvider from "./providers";
+
 export const metadata: Metadata = {
   title: "Posts",
   description: "Posts page",
@@ -20,7 +22,7 @@ export default function RootLayout({
       <body
         className={cn("font-sans bg-white", roboto.variable, roboto.className)}
       >
-        {children}
+        <RootProvider>{children}</RootProvider>
       </body>
     </html>
   );
