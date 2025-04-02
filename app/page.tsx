@@ -12,10 +12,10 @@ type Props = {
 const getData = async ({ searchParams }: Props) => {
   const params = await searchParams;
 
-  const filters = params.tags
-    ? Array.isArray(params.tags)
-      ? params.tags
-      : [params.tags]
+  const filters = params.tag
+    ? Array.isArray(params.tag)
+      ? params.tag
+      : [params.tag]
     : [];
 
   const [tags] = await Promise.all([
