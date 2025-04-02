@@ -5,6 +5,6 @@ const apiRoutes = {
   tags: {
     all: `${process.env.NEXT_PUBLIC_API_URL}/api/tags`,
   },
-};
+} as const;
 
 export { apiRoutes };
