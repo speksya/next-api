@@ -1,7 +1,7 @@
-import type { Post } from "@prisma/client";
 import type { FC } from "react";
 
 import { PostItem } from "@/entities/Post";
+import type { Post } from "@/shared/api/posts";
 import { PostLayout } from "@/shared/layouts/PostLayout";
 
 type Props = {
