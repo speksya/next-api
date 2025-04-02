@@ -33,6 +33,9 @@ export async function GET(request: NextRequest): ApiResponse<Post[]> {
     });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: postsErrors[500], status: 500 });
+    return NextResponse.json({
+      message: error instanceof Error ? error.message : postsErrors[500],
+      status: 500,
+    });
   }
 }
