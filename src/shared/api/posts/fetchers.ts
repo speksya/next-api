@@ -1,7 +1,6 @@
-import type { Post } from "@prisma/client";
-
 import { apiRoutes } from "../routes";
 import type { ErrorResponse, SuccessResponse } from "../types";
+import type { Post } from "./types";
 
 const getPosts = async () => {
   try {

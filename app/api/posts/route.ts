@@ -8,7 +8,7 @@ import type { ApiResponse } from "@/shared/api/types";
 
 export async function GET(): ApiResponse<Post[]> {
   try {
-    const posts = await prisma.post.findMany();
+    const posts = await prisma.post.findMany({ include: { tags: true } });
     return NextResponse.json({
       data: posts,
       status: 200,

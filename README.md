@@ -56,6 +56,7 @@ docker-compose up --build
 ```
 
 This will:
+
 1. Start a PostgreSQL database
 2. Build and run the Next.js application
 3. Set up the development environment

@@ -16,6 +16,11 @@ const config = {
         500: "#686868",
         600: "#212122",
       },
+      tag: {
+        news: "#FFFF00",
+        sport: "#00FF00",
+        health: "#00b4c6",
+      },
     },
     spacing: {
       none: "0",
@@ -83,6 +88,11 @@ const config = {
       sans: ["var(--font-roboto-sans)", ...fontFamily.sans],
     },
   },
+  safelist: [
+    {
+      pattern: /(text|bg)-tag-(news|sport|health)/,
+    },
+  ],
 } satisfies Config;
 
 export default config;
