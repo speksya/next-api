@@ -4,63 +4,56 @@
 import { faker } from "@faker-js/faker";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  transactionOptions: {
+    timeout: 30000,
+  },
+});
 
 async function main() {
   await prisma.post.deleteMany();
   await prisma.tag.deleteMany();
 
-  const tags = [
-    {
-      slug: "news",
-      title: "News",
-    },
-    {
-      slug: "sport",
-      title: "Sport",
-    },
-    {
-      slug: "health",
-      title: "Health",
-    },
-  ];
-
   await prisma.tag.createMany({
-    data: tags,
+    data: [
+      { slug: "news", title: "News" },
+      { slug: "sport", title: "Sport" },
+      { slug: "health", title: "Health" },
+    ],
+    skipDuplicates: true,
   });
+
+  const existingTags = await prisma.tag.findMany();
 
   const posts = Array.from({ length: 100 }).map(() => ({
     title: faker.lorem.words({ min: 5, max: 10 }),
-    body: faker.lorem.paragraph({ min: 10, max: 20 }),
+    body: faker.lorem.paragraphs({ min: 3, max: 6 }),
+    tags: {
+      connect: faker.helpers
+        .arrayElements(existingTags, { min: 1, max: 3 })
+        .map((tag) => ({ slug: tag.slug })),
+    },
   }));
 
-  await Promise.all(
-    posts.map((post) =>
-      prisma.post.create({
-        data: {
-          ...post,
-          tags: {
-            connect: faker.helpers
-              .arrayElements(tags, { min: 1, max: 3 })
-              .map((tag) => ({ slug: tag.slug })),
+  const BATCH_SIZE = 20;
+  for (let i = 0; i < posts.length; i += BATCH_SIZE) {
+    const batch = posts.slice(i, i + BATCH_SIZE);
+    await Promise.all(
+      batch.map((post) =>
+        prisma.post.create({
+          data: post,
+          include: {
+            tags: true,
           },
-        },
-        include: {
-          tags: true,
-        },
-      }),
-    ),
-  );
-
-  await prisma.post.createMany({
-    data: posts,
-    skipDuplicates: true,
-  });
+        }),
+      ),
+    );
+  }
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Seed failed:", e);
     process.exit(1);
   })
   .finally(async () => {
