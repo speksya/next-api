@@ -2,15 +2,19 @@
 
 import type { FC } from "react";
 
-import { PostItem } from "@/entities/Post";
+import { PostItem, PostItemLoader } from "@/entities/Post";
 import { useGetAllPosts } from "@/shared/hooks";
 
 const PostsWidget: FC = () => {
-  const { data } = useGetAllPosts();
+  const { data, isLoading } = useGetAllPosts();
 
   return (
     <div className="flex flex-col gap-xl">
-      {data?.map((post) => <PostItem key={post.id} post={post} />)}
+      {isLoading ? (
+        <PostItemLoader />
+      ) : (
+        data?.map((post) => <PostItem key={post.id} post={post} />)
+      )}
     </div>
   );
 };
